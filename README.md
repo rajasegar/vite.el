@@ -23,6 +23,15 @@ To create new Vite projects
 (vite/create)
 ```
 
+![Counsel menu](screenshots/counsel-menu.jpg)
+
+![project name](screenshots/get-project-name.jpg)
+![project directory](screenshots/project-directory.jpg)
+![choose framework](screenshots/choose-framework.jpg)
+![choose variant menu](screenshots/choose-variant.jpg)
+![command output](screenshots/command-output.jpg)
+
+
 To run vite in the current project/directory
 ```elisp
 (vite/run)
