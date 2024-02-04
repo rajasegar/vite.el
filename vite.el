@@ -155,6 +155,8 @@ Argument FRAMEWORK name of the JavaScript framework."
   "Run vite preview command in current directory."
   (async-shell-command "vite preview"))
 
+(provide 'vite)
+
 ;; Local Variables:
 ;; coding: utf-8
 ;; End:
