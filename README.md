@@ -17,6 +17,13 @@ Use `use-package` to install the package
   :load-path "elpa/vite.el/")
 ```
 
+## Pre-requisite
+You need to install the `vite` npm package in your machine before running the commands
+
+```
+npm install -g vite
+```
+
 ## Usage
 To create new Vite projects
 ```elisp
@@ -39,7 +46,7 @@ Next choose the variant, whether JavaScript or TypeScript
 ![choose variant menu](screenshots/choose-variant.jpg)
 
 
-Finall the vite create command is run and the command output will
+Finally the vite create command is run and the command output will
 be displayed in a separte buffer
 ![command output](screenshots/command-output.jpg)
 
