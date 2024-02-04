@@ -23,12 +23,24 @@ To create new Vite projects
 (vite/create)
 ```
 
+You can run the interactive functions using `M-x`
 ![Counsel menu](screenshots/counsel-menu.jpg)
 
+First it will ask you the name of the project you want to create
 ![project name](screenshots/get-project-name.jpg)
+
+Next choose the directory where you want to create the new project
 ![project directory](screenshots/project-directory.jpg)
+
+Choose your JavaScript framework:
 ![choose framework](screenshots/choose-framework.jpg)
+
+Next choose the variant, whether JavaScript or TypeScript
 ![choose variant menu](screenshots/choose-variant.jpg)
+
+
+Finall the vite create command is run and the command output will
+be displayed in a separte buffer
 ![command output](screenshots/command-output.jpg)
 
 
