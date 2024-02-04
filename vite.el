@@ -126,6 +126,7 @@ Argument FRAMEWORK name of the JavaScript framework."
 ;;;###autoload
 (defun vite/create ()
   "Create vite."
+  (interactive)
   (let ((project-name (read-string "Project name: " "vite-project"))
         (project-dir (read-directory-name "Project directory: " "~/www")))
 
@@ -139,21 +140,25 @@ Argument FRAMEWORK name of the JavaScript framework."
 ;;;###autoload
 (defun vite/vite ()
   "Run vite command in current directory."
+  (interactive)
   (async-shell-command "vite"))
 
 ;;;###autoload
 (defun vite/build ()
   "Run vite build command in current directory."
+  (interactive)
   (async-shell-command "vite build"))
 
 ;;;###autoload
 (defun vite/optimize ()
   "Run vite optimize command in current directory."
+  (interactive)
   (async-shell-command "vite optimize"))
 
 ;;;###autoload
 (defun vite/preview ()
   "Run vite preview command in current directory."
+  (interactive)
   (async-shell-command "vite preview"))
 
 (provide 'vite)
