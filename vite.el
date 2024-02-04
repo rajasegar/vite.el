@@ -18,7 +18,7 @@
 
 ;;; Code:
 
-(defvar frameworks '((:name "vanilla" :label "Vanilla"
+(defconst frameworks '((:name "vanilla" :label "Vanilla"
                             :variants [(:name "vanilla-ts" :display "TypeScript")
                                        (:name "vanilla" :display "JavaScript")])
                      (:name "react" :label "React"
@@ -122,6 +122,7 @@ Argument FRAMEWORK name of the JavaScript framework."
                         (let ((variant (get-text-property 0 'property x)))
                         (run-vite-command project-name project-dir variant
                                           (plist-get (get-variant framework variant) :custom-command)))))))
+
 ;;;###autoload
 (defun vite/create ()
   "Create vite."
