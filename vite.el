@@ -17,6 +17,7 @@
 ;; Full documentation is available as an Info manual.
 
 ;;; Code:
+(require 'cl-lib)
 
 (defconst frameworks '((:name "vanilla" :label "Vanilla"
                             :variants [(:name "vanilla-ts" :display "TypeScript")
@@ -52,18 +53,27 @@
                             :variants [(:name "create-vite-extra" :display "create-vite-extra ↗" :custom-commad "create vite-extra@latest")
                                        (:name "create-electron-vite" :display "create-electron-vite ↗" :custom-commad "create electron-vite@latest")])))
 
+
+(defun vite-get-frameworks()
+  "Get the list of frameworks"
+  (mapcar (lambda (f)
+            (plist-get f :name)
+            ) frameworks))
+
 (defvar vite/package-manager "npm")
 
 
 (defun find-framework-by-name (name)
   "Find framework item by NAME."
-  (car (remove-if-not (lambda (x)
+  (car (cl-remove-if-not (lambda (x)
                         (string-equal (plist-get x :name) name)) frameworks)))
+
+
 
 (defun get-variant (framework variant-name)
   "Get the variant from FRAMEWORK and VARIANT-NAME."
 (elt
- (remove-if-not
+ (cl-remove-if-not
   (lambda (x) (equal (plist-get x :name) variant-name))
   (plist-get (find-framework-by-name framework) :variants))
 0))
@@ -104,24 +114,20 @@ Argument CUSTOM-COMMAND custom command to run instead of default vite command."
              (format "npm create vite %s -- --template %s" project-name template)
            (format "%s create vite %s --template %s" vite/package-manager project-name template)))))))
 
+
 (defun bootstrap-project (project-name project-dir framework)
   "Select a variant.
 Argument PROJECT-NAME name of the project.
 Argument PROJECT-DIR directory of the new project.
 Argument FRAMEWORK name of the JavaScript framework."
-  (let ((variants (plist-get (find-framework-by-name framework) :variants)))
-    (ivy-read "Select a variant: "
-              (lambda (str pred _)
-                (let* ((props (cl-mapcar (lambda (x) (plist-get x :name)) variants))
-                       (strs (cl-mapcar (lambda (x) (plist-get x :display)) variants)))
-                  (cl-mapcar (lambda (s p) (propertize s 'property p))
-                             strs
-                             props
-                             )))
-              :action (lambda (x)
-                        (let ((variant (get-text-property 0 'property x)))
-                        (run-vite-command project-name project-dir variant
-                                          (plist-get (get-variant framework variant) :custom-command)))))))
+  (let* ((variants (plist-get (find-framework-by-name framework) :variants))
+        (variant (ido-completing-read "Select a variant: "
+                         (mapcar (lambda (v)
+                                   (plist-get v :name)
+                                   ) variants))))
+    
+    (run-vite-command project-name project-dir variant
+    (plist-get (get-variant framework variant) :custom-commad ))))
 
 ;;;###autoload
 (defun vite/create ()
@@ -131,10 +137,7 @@ Argument FRAMEWORK name of the JavaScript framework."
         (project-dir (read-directory-name "Project directory: " "~/www")))
 
     ;; Select a framework
-    (ivy-read "Select a framework: "
-              #'select-framework
-              :action (lambda (x)
-                        (bootstrap-project project-name project-dir (get-text-property 0 'property x))))))
+    (bootstrap-project project-name project-dir (ido-completing-read "Select a framework: " (vite-get-frameworks)))))
 
 
 ;;;###autoload
